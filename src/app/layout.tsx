@@ -7,6 +7,8 @@ import Image from "next/image";
 
 import logoImg from "../../public/logo.png";
 import Link from "next/link";
+import { SignInButton, SignOutButton } from "./auth-buttons";
+import { getServerAuthSession } from "@/server/auth";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -20,9 +22,11 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const session = await getServerAuthSession();
+
   return (
     <html lang="en" className={`${GeistSans.variable} bg-black/90 text-white`}>
       <body className="page-container">
@@ -36,12 +40,7 @@ export default function RootLayout({
             </span>
           </Link>
           <nav className="flex items-center gap-x-4">
-            <Link href="/auth/login" className="btn">
-              Login
-            </Link>
-            <Link href="/auth/register" className="btn">
-              Register
-            </Link>
+            {session ? <SignOutButton /> : <SignInButton />}
           </nav>
         </header>
         <main className="content-wrap">{children}</main>

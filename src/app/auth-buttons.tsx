@@ -3,9 +3,17 @@
 import { signIn, signOut } from "next-auth/react";
 
 export const SignInButton = () => {
-  return <button onClick={() => signIn("github")}>Sign In</button>;
+  return (
+    <button className="btn" onClick={() => signIn("github")}>
+      Sign In
+    </button>
+  );
 };
 
 export const SignOutButton = () => {
-  return <button onClick={() => signOut()}>Sign Out</button>;
+  return (
+    <button className="btn" onClick={() => signOut()}>
+      Sign Out
+    </button>
+  );
 };

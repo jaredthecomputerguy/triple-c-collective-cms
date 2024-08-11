@@ -33,6 +33,17 @@ export const authOptions: NextAuthOptions = {
         id: user.id,
       },
     }),
+    signIn: async ({ user }) => {
+      if (user.email === env.GITHUB_EMAIL) {
+        return true;
+      } else {
+        console.log(
+          "--> [AUTH] - User attempted to sign in: ",
+          JSON.stringify(user),
+        );
+        return false;
+      }
+    },
   },
   adapter: DrizzleAdapter(db, {
     // @ts-expect-error Issue with the current DrizzleAdapter
